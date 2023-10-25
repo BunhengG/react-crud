@@ -1,24 +1,34 @@
 import { useEffect, useState } from "react"
 import { Employee, PageEnum } from "./Employee.type";
+// import { Employee, dummyEmployeeList, PageEnum } from "./Employee.type";
 import EmployeeList from "./EmployeeList";
 import ActionButton from "./ActionButton";
 import AddEmployee from "./AddEmployee";
 import EditEmployee from "./EditEmployee";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 function Home() {
 
   const titleStyle = "mb-5 mt-5 text-center text-uppercase";
 
+  //***** /*
+
+  //* declare state here to get data as dynamic array from employee.type.tsx 
   const [employeeList, setEmployeeList] = useState([] as Employee[]);
+
+  //* here, we declare array as static that get data from employee.type.tsx to use
+  //? const [employeeList, setEmployeeList] = useState(dummyEmployeeList as Employee[]);
+
+  //****** */
+
   const [shownPage, setShownPage] = useState(PageEnum.list);
   const [dataToEdit, setDataToEdit] = useState({} as Employee);
 
   useEffect(() => {
     const listInString = window.localStorage.getItem("EmployeeList")
-    if(listInString)
-      {
-        _setEmployeeList(JSON.parse(listInString));
-      }
+    if (listInString) {
+      _setEmployeeList(JSON.parse(listInString));
+    }
   }, []);
 
   //* locate to Add Employee page
@@ -57,7 +67,7 @@ function Home() {
     setShownPage(PageEnum.edit);
     setDataToEdit(data);
   }
-  const updatedata = (data: Employee) => {
+  const updateData = (data: Employee) => {
     const filterData = employeeList.filter(x => x.id === data.id)[0];
     const indexOfRecord = employeeList.indexOf(filterData);
     const tempData = [...employeeList];
@@ -72,7 +82,6 @@ function Home() {
           <h1>React Crud</h1>
         </header>
       </article>
-
       <main>
         <section>
           <div className='d-flex justify-content-center'>
@@ -81,8 +90,8 @@ function Home() {
           {shownPage === PageEnum.list &&
             (
               <>
-                <div className="me-5 d-flex justify-content-end">
-                  <ActionButton text="Add New" className="btn-warning me-5 shadow-sm mb-3" onClick={onAddEmployeeClickHandler} />
+                <div className="container d-flex justify-content-end">
+                  <ActionButton text="Add New " className="btn-primary text-uppercase text-white fw-bold shadow-sm mb-3" onClick={onAddEmployeeClickHandler} icon={faCirclePlus} />
                 </div>
                 <EmployeeList
                   list={employeeList}
@@ -96,7 +105,7 @@ function Home() {
           {shownPage === PageEnum.add && <AddEmployee onBackFunctionHnd={showListPage} onSubmitHnd={addEmployee} />}
 
           {/* show Create Page */}
-          {shownPage == PageEnum.edit && <EditEmployee data={dataToEdit} onBackFunctionHnd={showListPage} onUpdateClickHnd={updatedata} />}
+          {shownPage == PageEnum.edit && <EditEmployee data={dataToEdit} onBackFunctionHnd={showListPage} onUpdateClickHnd={updateData} />}
 
         </section>
       </main>

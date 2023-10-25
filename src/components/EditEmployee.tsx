@@ -16,8 +16,8 @@ const EditEmployee = (props: Props) => {
     const [lastname, setLastName] = useState(data.lastName);
     const [email, setEmail] = useState(data.email);
 
-     //* declare function for catch value from input
-     const onFirstNameChangeHnd = (e: any) => {
+    //* declare function for catch value from input
+    const onFirstNameChangeHnd = (e: any) => {
         setFirstName(e.target.value);
     }
     const onLastNameChangeHnd = (e: any) => {

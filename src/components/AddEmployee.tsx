@@ -29,11 +29,19 @@ const AddEmployee = (props: Props) => {
     //* Submit Data
     const onSubmitClickHnd = (e: any) => {
         e.preventDefault();
+        // Date
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Ensure two-digit month
+        const day = String(currentDate.getDate()).padStart(2, "0"); // Ensure two-digit day
+        const formattedDate = `${year}-${month}-${day}`;
+
         const data: Employee = {
             id: new Date().toJSON().toString(),
             firstName: firstname,
             lastName: lastname,
-            email: email
+            email: email,
+            date: formattedDate,
         }
         onSubmitHnd(data);
         onBackFunctionHnd();

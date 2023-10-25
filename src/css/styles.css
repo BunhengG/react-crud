@@ -1,0 +1,9 @@
+.table-hover tr:hover {
+    background-color: #ff9900;
+    color: white;
+}
+
+.table-custom-active {
+    background-color: #ff9900;
+    color: white;
+}

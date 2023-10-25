@@ -3,6 +3,7 @@ export interface Employee {
     firstName: string;
     lastName: string;
     email: string;
+    date: string;
 }
 
 // export const dummyEmployeeList: Employee[] = [
@@ -14,7 +15,7 @@ export interface Employee {
 //     },
 // ];
 
-export enum PageEnum{
+export enum PageEnum {
     list,
     add,
     edit,

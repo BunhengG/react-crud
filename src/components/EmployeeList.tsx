@@ -2,7 +2,8 @@ import { useState } from "react";
 import ActionButton from "./ActionButton";
 import { Employee } from "./Employee.type";
 import EmployeeModal from "./EmployeeModal";
-
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import "../css/styles.css";
 
 type Props = {
     list: Employee[];
@@ -15,39 +16,57 @@ const EmployeeList = (props: Props) => {
     //* Open modal
     const [shadowModal, setShowModal] = useState(false);
     const [dataToView, setDataToView] = useState(null as Employee | null);
+    const [selectedIndex, setSelectIndex] = useState(-1);
 
-    const viewEmployee = (data: Employee) => {
+    const viewEmployee = (data: Employee, index: number) => {
         setDataToView(data);
         setShowModal(true);
+        setSelectIndex(index);
     }
-    const onCloseModal = () => setShowModal(false);
+    const onCloseModal = () => {
+        setShowModal(false);
+        setSelectIndex(-1);
+    }
 
+    const confirmDelete = (employee: Employee) => {
+        const userConfirmed = window.confirm('Are you sure you want to delete this employee?');
+
+        if (userConfirmed) {
+            onDeleteHnd(employee);
+        }
+    };
 
     return (
         <div>
             <div className="container bg-white shadow rounded p-3">
-                <table className="table table-striped table-hover">
+                <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Action</th>
+                            <th className="bg-primary text-white">№</th>
+                            <th className="bg-primary text-white">Name</th>
+                            <th className="bg-primary text-white">Email</th>
+                            <th className="bg-primary text-white">Date</th>
+                            <th className="bg-primary text-white">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {list.map((employee) => {
+                        {list.map((employee, index) => {
                             // console.log(employee);
+                            const employeeCount = index + 1;
                             return (
-                                <tr key={employee.id}>
-                                    <th scope="row">1</th>
+                                <tr className={selectedIndex === index ? "table-custom-active" : ""} key={employee.id} onClick={() => viewEmployee(employee, index)} style={{ cursor: 'pointer' }}>
+                                    <th scope="row">{employeeCount}</th>
                                     <td>{`${employee.firstName} ${employee.lastName}`}</td>
                                     <td>{employee.email}</td>
+                                    <td>{employee.date}</td>
                                     <td>
                                         <div>
-                                            <ActionButton text="View" className="btn-primary ms-2" onClick={() => viewEmployee(employee)} />
-                                            <ActionButton text="Edit" className="btn-success ms-2" onClick={() => onEdit(employee)}/>
-                                            <ActionButton text="Delete" className="btn-danger ms-2" onClick={() => onDeleteHnd(employee)} />
+                                            {/* <ActionButton icon={faEye} text="" className="btn-primary btn-sm ms-2" onClick={() => viewEmployee(employee)} /> */}
+                                            <ActionButton icon={faPenToSquare} text="" className="btn-success btn-sm ms-2" onClick={() => onEdit(employee)} />
+                                            <ActionButton icon={faTrashCan} text="" className="btn-danger btn-sm ms-2" onClick={(e) => {
+                                                e.stopPropagation();
+                                                confirmDelete(employee);
+                                            }} />
                                         </div>
                                     </td>
                                 </tr>

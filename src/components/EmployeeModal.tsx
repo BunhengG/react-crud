@@ -1,4 +1,7 @@
 import { Employee } from "./Employee.type";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 
 type Props = {
     onClose: () => void;
@@ -10,15 +13,19 @@ const EmployeeModal = (props: Props) => {
     return (
         <>
             <div className="container mt-3">
-                <h5 className="mt-5">View Employee</h5>
-                <div className="d-flex justify-content-end mb-2">
-                    <button className="btn-close" onClick={ onClose }></button>
+                <div className="row mb-3">
+                    <div className="col-6 d-flex justify-content-start align-items-center mt-5">
+                        <h5 className="text-primary text-uppercase">View Employee</h5>
+                    </div>
+                    <div className="col-6 d-flex justify-content-end align-items-center mt-5">
+                        <span className="text-danger fs-3" style={{ cursor: 'pointer' }} onClick={onClose}><FontAwesomeIcon icon={faXmark} /></span>
+                    </div>
                 </div>
-                <ul className="list-group">
-                    <li className="list-group-item">First Name: {data.firstName}</li>
-                    <li className="list-group-item">Last Name: {data.lastName}</li>
-                    <li className="list-group-item">Email: {data.email}</li>
-                    
+                <ul className="list-group shadow p-3">
+                    <li className="list-group-item"><b>First Name: </b> {data.firstName}</li>
+                    <li className="list-group-item"><b>Last Name: </b> {data.lastName}</li>
+                    <li className="list-group-item"><b>Email: </b> {data.email}</li>
+                    <li className="list-group-item"><b>Date: </b> {data.date}</li>
                 </ul>
             </div>
         </>
